@@ -1,0 +1,200 @@
+%------- Informations générales -------
+\NeedsTeXFormat{LaTeX2e}[1999/01/01]
+\ProvidesPackage{CarnoTeX}[2021/06/12]
+%-------------------------------------------------
+
+%------- Chargement des extensions -------
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{amsmath,amsfonts,amssymb}
+\RequirePackage[francais]{babel}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[margin=2cm]{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{hyperref}
+\RequirePackage{qrcode}
+\RequirePackage{pifont}
+\RequirePackage{pstricks,pst-plot,pstricks-add}
+\RequirePackage{tikz,tkz-tab}
+\RequirePackage{xcolor}
+\RequirePackage{colortbl}
+\RequirePackage{fancyhdr}
+\RequirePackage{fancybox}
+\RequirePackage{enumerate}
+\RequirePackage{enumitem}
+\RequirePackage{multicol}
+\RequirePackage{multirow}
+\RequirePackage{ifthen}
+\RequirePackage{calc}
+%------- A charger en dernier -------
+\RequirePackage{pythonhighlight}
+\RequirePackage[amsmath,thmmarks,thref,hyperref]{ntheorem}
+\RequirePackage{eurosym}
+%-------------------------------------------------
+
+%------- Déclaration des options -------
+%\DeclareOption{option}{...}
+%\DeclareOption*{...}
+%\ProcessOptions
+%-------------------------------------------------
+
+%------- Définitions de mise en page -------
+%\setlength\paperheight{297mm}
+%\setlength\paperwidth{210mm}
+\setlength{\voffset}{-1cm}
+\setlength{\hoffset}{1cm}
+\topmargin -2cm 
+\headheight 15mm
+\headsep 5mm
+\footskip 10mm
+\oddsidemargin -15mm
+\evensidemargin -15mm
+\parindent=0pt
+\setlength{\itemindent}{-1cm}
+%-------------------------------------------------
+
+%------- Environnements théorèmes -------
+\definecolor{couleur1}{RGB}{255, 150, 0}	% couleur prop
+\definecolor{couleur2}{RGB}{142, 78, 242}% couleur thrm
+\definecolor{couleur3}{RGB}{45, 135, 175}% couleur df
+{%
+\theoremstyle{plain}
+\theoremheaderfont{\scshape}
+\theorembodyfont{\upshape\normalsize}
+\theoremseparator{.}
+\newtheorem{propP}{\textcolor{black!30!couleur1}{Propriété}}
+\newtheorem{thrmP}{\textcolor{black!30!couleur2}{Théorème}}%[section]
+\newtheorem{dfP}{\textcolor{black!30!couleur3}{Définition}}
+\newtheorem{exo}{\textcolor{violet}{Exercice}}
+\newtheorem{exe}{\textcolor{red}{Exemple}}
+\newtheorem{prb}{\textcolor{violet}{Problème}}
+\newtheorem{rem}{\textcolor{orange}{Remarque}}
+}
+{%
+\theoremstyle{break}
+\theorembodyfont{\small}
+\newtheorem*{dem}{\textcolor{teal}{Démonstration}}
+\newtheorem*{sol}{\textcolor{teal}{Solution}}
+}
+%-------------------------------------------------
+
+%------- Définition des commandes -------
+\makeatletter
+% La version étoilée est encadrée
+\newcommand{\prop}{\@ifstar{\propStar}{\propNoStar}}
+\newcommand{\propNoStar}[1]{\propP{#1}}
+\newcommand{\propStar}[1]{\cadre{couleur1}{\propP{#1}}}
+\newcommand{\thrm}{\@ifstar{\thrmStar}{\thrmNoStar}}
+\newcommand{\thrmNoStar}[1]{\thrmP{#1}}
+\newcommand{\thrmStar}[1]{\cadre{couleur2}{\thrmP{#1}}}
+\newcommand{\df}{\@ifstar{\dfStar}{\dfNoStar}}
+\newcommand{\dfNoStar}[1]{\dfP{#1}}
+\newcommand{\dfStar}[1]{\cadre{couleur3}{\dfP{#1}}}
+\makeatother
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\D}{\mathbb{D}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Cp}{\mathbb{C}}
+\newcommand{\ii}{\mathrm{i}}
+%\DeclareMathOperator{\ii}{i}	% Génère un espace avec ce qui suit
+\renewcommand{\thesection}{\Alph{section}.}
+\newcommand{\cqfd}{%
+\hfill$\square$
+}
+
+\newcommand{\vct}[3]{%
+\overrightarrow{#1}\left(\begin{array}{c}
+#2\\
+#3
+\end{array}\right)
+}
+\newcommand{\coord}[2]{%
+\left(\begin{array}{c}
+#1\\
+#2
+\end{array}\right)
+}
+\newcommand{\coor}[3]{%
+\left(\begin{array}{c}
+#1\\
+#2\\
+#3
+\end{array}\right)
+}
+\newcommand{\vc}[1]{%
+\overrightarrow{#1}
+}
+
+\newcommand{\cbox}[3]{%
+\colorbox{#1!70!white}{\color{white}{\textbf{#2}}\strut}{%
+\colorbox{#1!30!white}{#3\strut}
+}}
+
+\newcommand{\Cbox}[3]{%
+\colorbox{#1!30!white}{%
+\begin{minipage}[t]{\linewidth-2\fboxsep}
+\leftskip=-2pt
+\vspace{-3pt}
+\hspace{-5pt}\colorbox{#1!70!white}{\color{white}{%
+\textbf{#2}}\strut
+}
+\leftskip=2pt
+~#3
+\end{minipage}
+}\ms
+}
+
+\newcommand{\cadre}[2]{%
+\colorbox{#1!30!white}{%
+\begin{minipage}[t]{\linewidth-2\fboxsep}
+#2
+\end{minipage}
+}
+}
+
+\newcommand{\bandeau}[3]{%
+\colorbox{#1!70!white}{\color{white}{\textbf{#2}}\strut}\colorbox{#1!30!white}{%
+\begin{minipage}{\linewidth-4\fboxsep-\widthof{\textbf{#2}}}%
+#3\strut
+\end{minipage}
+}\ms
+}
+
+\makeatletter
+% Définition d'une commande pour tracer des lignes
+% #1 Couleur
+% #2 Longueur
+% #3 largeur
+% La version étoilée centre la ligne (retour à la ligne dans ce cas)
+\newcommand{\colorline}{\@ifstar{\colorlineStar}{\colorlineNoStar}}
+\newcommand{\colorlineNoStar}[3]{{\color{#1}\rule{#2}{#3}}}
+\newcommand{\colorlineStar}[3]{{\color{#1}\centerline{\rule{#2}{#3}}}}
+\makeatother
+
+% Version décorative d'une ligne colorée
+\newcommand{\decoline}{\colorline{black}{0.48\linewidth}{0.5pt}\hfill{\raisebox{-0.4\height}{\textleaf}}\hfill\colorline{black}{0.48\linewidth}{0.5pt}}
+% Elle dessine une feuille centrée entourée de deux colorline noires.
+
+\newcommand{\rl}{\rule[-1em]{0pt}{2.5em}} % Utilisé pour réhaussé une cellule dans un tableau, numérateur et dénominateur d'une fraction, etc
+\newcommand{\ms}{\medskip\\}
+\newcommand{\bs}{\bigskip\\}
+
+\makeatletter
+\newcommand{\siecle}{\@ifstar{\siecleStar}{\siecleNoStar}}
+\newcommand\siecleNoStar[2][\ieme]{\textsc{\romannumeral #2}\textsuperscript{#1}~siècle}
+\newcommand\siecleStar[2][\ieme]{\textsc{\romannumeral #2}\textsuperscript{#1}~siècle av. J.-C. }
+\makeatother
+
+
+%------- Divers -------
+\graphicspath{{images/}}
+\DeclareGraphicsExtensions{.jpg}
+\DeclareMathOperator{\e}{e}
+\setitemize{label=\ding{74}}
+\def\thefootnote{\roman{footnote}}
+\pagestyle{fancy}
+
+%------- Fin du package-------
+\endinput
