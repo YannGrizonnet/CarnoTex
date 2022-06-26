@@ -1,6 +1,6 @@
 %------- Informations générales -------
 \NeedsTeXFormat{LaTeX2e}[1999/01/01]
-\ProvidesPackage{CarnoTeX}[2021/06/12]
+\ProvidesPackage{CarnoTeX}[2022/06/26]
 %-------------------------------------------------
 
 %------- Chargement des extensions -------
@@ -25,6 +25,7 @@
 \RequirePackage{multirow}
 \RequirePackage{ifthen}
 \RequirePackage{calc}
+\usepackage{xargs}
 %------- A charger en dernier -------
 \RequirePackage{pythonhighlight}
 \RequirePackage[amsmath,thmmarks,thref,hyperref]{ntheorem}
@@ -162,20 +163,30 @@
 }\ms
 }
 
+% -------
+% Ligne colorée de couleur, longueur et épaisseur donnée.
+% Valeurs par défaut : black, \linewidth et 0.5pt
+% \colorline[][][2pt] laisse couleur et longueur par défaut (voir  package xargs)
 \makeatletter
-% Définition d'une commande pour tracer des lignes
-% #1 Couleur
-% #2 Longueur
-% #3 largeur
-% La version étoilée centre la ligne (retour à la ligne dans ce cas)
-\newcommand{\colorline}{\@ifstar{\colorlineStar}{\colorlineNoStar}}
-\newcommand{\colorlineNoStar}[3]{{\color{#1}\rule{#2}{#3}}}
-\newcommand{\colorlineStar}[3]{{\color{#1}\centerline{\rule{#2}{#3}}}}
+\newcommandx{\colorline}{\@ifstar{\colorlineStar}{\colorlineNoStar}}
+\newcommandx{\colorlineNoStar}[3][1=black, 2=\the\linewidth, 3=0.5pt, usedefault=]{{\color{#1}\rule{#2}{#3}}}
+\newcommandx{\colorlineStar}[3][1=black, 2=\the\linewidth, 3=0.5pt, usedefault=]{{\color{#1}\centerline{\rule{#2}{#3}}}}
 \makeatother
-
 % Version décorative d'une ligne colorée
-\newcommand{\decoline}{\colorline{black}{0.48\linewidth}{0.5pt}\hfill{\raisebox{-0.4\height}{\textleaf}}\hfill\colorline{black}{0.48\linewidth}{0.5pt}}
-% Elle dessine une feuille centrée entourée de deux colorline noires.
+\newcommand{\decoline}{%
+\pgfmathsetmacro{\longueur}{0.0351*\linewidth}
+\begin{tikzpicture}
+\draw (0,0) -- (\longueur,0) node[midway, fill=white] {\textleaf};
+\end{tikzpicture}
+}
+% Encart historique
+\newcommand{\histo}[1]{%
+\decoline
+
+#1
+
+\colorline
+}
 
 \newcommand{\rl}{\rule[-1em]{0pt}{2.5em}} % Utilisé pour réhaussé une cellule dans un tableau, numérateur et dénominateur d'une fraction, etc
 \newcommand{\ms}{\medskip\\}
