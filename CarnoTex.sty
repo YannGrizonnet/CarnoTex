@@ -51,12 +51,13 @@
 \evensidemargin -15mm
 \parindent=0pt
 \setlength{\itemindent}{-1cm}
+\setlength{\fboxrule}{0pt}
 %-------------------------------------------------
 
 %------- Environnements théorèmes -------
 \definecolor{couleur1}{RGB}{255, 150, 0}	% couleur prop
-\definecolor{couleur2}{RGB}{142, 78, 242}% couleur thrm
-\definecolor{couleur3}{RGB}{45, 135, 175}% couleur df
+\definecolor{couleur2}{RGB}{142, 78, 242}	% couleur thrm
+\definecolor{couleur3}{RGB}{45, 135, 175}	% couleur df
 {%
 \theoremstyle{plain}
 \theoremheaderfont{\scshape}
@@ -163,6 +164,22 @@
 }\ms
 }
 
+<<<<<<< HEAD
+=======
+% Commande pour afficher deux minipages côte à côte
+% Par défaut 0.48\linewidth chacune
+% \col[x][y]{}{} pour modifier les paramètres 1 et 2
+\newcommandx{\col}[4][1=0.48, 2=0.48]{
+\begin{minipage}[t]{#1\linewidth}\vspace{0pt}%
+#3
+\end{minipage}
+\hfill
+\begin{minipage}[t]{#2\linewidth}\vspace{0pt}%
+#4
+\end{minipage}\ms
+}
+
+>>>>>>> acfc4b4 (Nouvelle commande \col pour afficher deux minipages. Et \fboxrule à 0pt)
 % -------
 % Ligne colorée de couleur, longueur et épaisseur donnée.
 % Valeurs par défaut : black, \linewidth et 0.5pt
