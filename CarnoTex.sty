@@ -1,4 +1,4 @@
-%------- Informations générales -------
+*%------- Informations générales -------
 \NeedsTeXFormat{LaTeX2e}[1999/01/01]
 \ProvidesPackage{CarnoTeX}[2022/06/26]
 %-------------------------------------------------
@@ -164,8 +164,6 @@
 }\ms
 }
 
-<<<<<<< HEAD
-=======
 % Commande pour afficher deux minipages côte à côte
 % Par défaut 0.48\linewidth chacune
 % \col[x][y]{}{} pour modifier les paramètres 1 et 2
@@ -179,7 +177,6 @@
 \end{minipage}\ms
 }
 
->>>>>>> acfc4b4 (Nouvelle commande \col pour afficher deux minipages. Et \fboxrule à 0pt)
 % -------
 % Ligne colorée de couleur, longueur et épaisseur donnée.
 % Valeurs par défaut : black, \linewidth et 0.5pt
@@ -220,7 +217,9 @@
 \graphicspath{{images/}}
 \DeclareGraphicsExtensions{.jpg}
 \DeclareMathOperator{\e}{e}
-\setitemize{label=\ding{74}}
+%\setitemize{label=\ding{74}}
+%\setitemize{label={\tiny\ding{108}}}
+\setitemize{label={\tiny$\square$}}
 \def\thefootnote{\roman{footnote}}
 \pagestyle{fancy}
 
